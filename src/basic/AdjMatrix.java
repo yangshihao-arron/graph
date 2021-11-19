@@ -60,6 +60,7 @@ public class AdjMatrix {
         return adj[v][w] == 1;
     }
 
+    //和v相邻的边
     public ArrayList<Integer> adj(int v){
         validateVertex(v);
         ArrayList<Integer> res = new ArrayList<>();

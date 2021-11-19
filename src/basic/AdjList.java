@@ -69,7 +69,7 @@ public class AdjList {
     }
 
     public int degree(int v){
-        return adj[v].size();
+        return adj(v).size();
     }
 
     @Override
