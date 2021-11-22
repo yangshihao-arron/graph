@@ -1,4 +1,4 @@
-package basic;
+package a1_basic;
 
 import java.io.*;
 import java.util.ArrayList;

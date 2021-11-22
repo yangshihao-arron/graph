@@ -1,6 +1,6 @@
-package traverse;
+package a2_traverse;
 
-import basic.Graph;
+import a1_basic.Graph;
 
 import java.util.ArrayList;
 

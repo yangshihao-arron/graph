@@ -1,27 +1,27 @@
-package basic;
+package a1_basic;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
+import java.util.TreeSet;
 import java.util.Scanner;
 
-public class AdjList {
+public class AdjSet {
 
     private int V;
     private int E;
-    private LinkedList<Integer>[] adj;
+    private TreeSet<Integer>[] adj;
 
-    public AdjList(String filename){
+    public AdjSet(String pathStr){
 
-        File file = new File(filename);
+        File file = new File(pathStr);
 
         try(Scanner scanner = new Scanner(file)){
 
             V = scanner.nextInt();
             if(V < 0) throw new IllegalArgumentException("V must be non-negative");
-            adj = new LinkedList[V];
+            adj = new TreeSet[V];
             for(int i = 0; i < V; i ++)
-                adj[i] = new LinkedList<Integer>();
+                adj[i] = new TreeSet<Integer>();
 
             E = scanner.nextInt();
             if(E < 0) throw new IllegalArgumentException("E must be non-negative");
@@ -33,7 +33,7 @@ public class AdjList {
                 validateVertex(b);
 
                 if(a == b) throw new IllegalArgumentException("Self Loop is Detected!");
-                if(adj[a].contains(b)) throw new IllegalArgumentException("Parallel Edges are Detected!");//建图： O(E*V)
+                if(adj[a].contains(b)) throw new IllegalArgumentException("Parallel Edges are Detected!");
 
                 adj[a].add(b);
                 adj[b].add(a);
@@ -63,13 +63,15 @@ public class AdjList {
         return adj[v].contains(w);
     }
 
-    public LinkedList<Integer> adj(int v){
+    public Iterable<Integer> adj(int v){
+    // public TreeSet<Integer> adj(int v){
         validateVertex(v);
         return adj[v];
     }
 
     public int degree(int v){
-        return adj(v).size();
+        validateVertex(v);
+        return adj[v].size();
     }
 
     @Override
@@ -88,7 +90,7 @@ public class AdjList {
 
     public static void main(String[] args){
 
-        AdjList adjList = new AdjList("g.txt");
-        System.out.print(adjList);
+        AdjSet adjSet = new AdjSet("g.txt");
+        System.out.print(adjSet);
     }
 }
