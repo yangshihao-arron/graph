@@ -1,4 +1,4 @@
-package a2_traverse;
+package a2_dfs;
 
 import a1_basic.Graph;
 

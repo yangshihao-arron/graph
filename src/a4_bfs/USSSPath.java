@@ -1,4 +1,4 @@
-package a4_bf4;
+package a4_bfs;
 
 import a1_basic.Graph;
 

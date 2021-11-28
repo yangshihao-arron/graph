@@ -1,10 +1,10 @@
-package a2_traverse;
+package a2_dfs;
 
 import a1_basic.Graph;
 import java.util.ArrayList;
 
-//所有联通分量都可以遍历了
-public class GraphDFS2 {
+//有bug的，只针对一个联通图有效
+public class GraphDFS1 {
 
     private Graph G;
     private boolean[] visited;
@@ -12,13 +12,11 @@ public class GraphDFS2 {
 
     private ArrayList<Integer> order = new ArrayList<>();
 
-    public GraphDFS2(Graph G){
+    public GraphDFS1(Graph G){
 
         this.G = G;
         visited = new boolean[G.V()];
-        for(int v = 0; v < G.V(); v++)
-            if(!visited[v])
-                dfs(v);
+        dfs(0);
     }
 
     private void dfs(int v){
@@ -36,7 +34,7 @@ public class GraphDFS2 {
 
     public static void main(String[] args) {
         Graph graph = new Graph("g.txt");
-        GraphDFS2 graphDFS1 = new GraphDFS2(graph);
-        System.out.println(graphDFS1.order());
+        GraphDFS1 graphDFS = new GraphDFS1(graph);
+        System.out.println(graphDFS.order());
     }
 }
