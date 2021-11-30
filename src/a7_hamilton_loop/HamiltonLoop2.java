@@ -6,43 +6,39 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 
-public class HamiltonLoop {
+public class HamiltonLoop2 {
     private Graph G;
     private boolean[] visited;
     private int[] pre;
     private int end;
 
-    public HamiltonLoop(Graph G){
+    public HamiltonLoop2(Graph G){
 
         this.G = G;
         visited = new boolean[G.V()];
         pre = new int[G.V()];
         end = -1;
 
-        dfs(0,0);
+        dfs(0,0,G.V());
     }
 
-    private boolean dfs(int v,int parent){
+    private boolean dfs(int v, int parent, int left){
 
         visited[v] = true;
         pre[v] = parent;
+        left--;
+        if(left == 0 && G.hasEdge(v, 0)){
+            end = v;
+            return true;
+        }
+
         for(int w : G.adj(v))
             if(!visited[w]){
-                if(dfs(w,v)) return true;
-            }
-            else if(w == 0 &&allVisited()){
-                end = v;
-                System.out.println("success : " + end);
-                return true;
+                if(dfs(w, v, left)) return true;
             }
         visited[v] = false;
+        //left++;值传递，每一层的left都不同
         return false;
-    }
-    private boolean allVisited(){
-        for(boolean visit : visited)
-            if(visit == false)
-                return false;
-        return true;
     }
 
     public ArrayList<Integer> result(){
@@ -66,10 +62,10 @@ public class HamiltonLoop {
 
     public static void main(String[] args) {
         Graph g = new Graph("g9.txt");
-        HamiltonLoop hamiltonLoop = new HamiltonLoop(g);
+        HamiltonLoop2 hamiltonLoop = new HamiltonLoop2(g);
         System.out.println(hamiltonLoop.result());
         Graph g2 = new Graph("g92.txt");
-        HamiltonLoop hamiltonLoop2 = new HamiltonLoop(g2);
+        HamiltonLoop2 hamiltonLoop2 = new HamiltonLoop2(g2);
         System.out.println(hamiltonLoop2.result());
     }
 }
