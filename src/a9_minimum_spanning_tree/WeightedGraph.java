@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.TreeMap;
+import java.util.TreeMap; 
 
-//无向带权图
+//带权图
 public class WeightedGraph {
     private int V;
     private int E;
