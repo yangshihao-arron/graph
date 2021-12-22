@@ -1,6 +1,8 @@
 package a10_shortest_path;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.PriorityQueue;
 
 public class OptDijkstra {
@@ -9,6 +11,7 @@ public class OptDijkstra {
     private int s;
     private int[] dis;
     private boolean[] visited;  //确认那些顶点最短路径求出来了
+    private int[] pre;
 
     private class Node implements Comparable<Node>{
 
@@ -34,7 +37,11 @@ public class OptDijkstra {
 
         dis = new int[G.V()];
         Arrays.fill(dis,Integer.MAX_VALUE);
+
+        pre = new int[G.V()];
+        Arrays.fill(pre,-1);
         dis[s] = 0;
+        pre[s] = s;
 
         visited = new boolean[G.V()];
         PriorityQueue<Node> pq = new PriorityQueue<>();
@@ -50,6 +57,7 @@ public class OptDijkstra {
                     if(dis[cur] + G.getWeight(cur, w) < dis[w]){
                         dis[w] = dis[cur] + G.getWeight(cur, w);
                         pq.add(new Node(w,dis[w]));
+                        pre[w] = cur;
                     }
                 }
 
@@ -68,6 +76,20 @@ public class OptDijkstra {
         return dis[v];
     }
 
+    public Iterable<Integer> path(int t){
+        ArrayList<Integer> res = new ArrayList<>();
+        if(!isConnectedTo(t)) return res;
+
+        int cur = t;
+        while (cur != s){
+             res.add(cur);
+             cur = pre[cur];
+        }
+        res.add(s);
+        Collections.reverse(res);
+        return res;
+    }
+
     public static void main(String[] args) {
 
         WeightedGraph g = new WeightedGraph("g10.txt");
@@ -75,5 +97,7 @@ public class OptDijkstra {
         for(int v = 0; v < g.V(); v++)
             System.out.print(dij.disTo(v) + " ");
         System.out.println();
+        System.out.println(dij.path(3));
+
     }
 }
