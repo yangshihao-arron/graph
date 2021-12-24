@@ -1,7 +1,6 @@
 package a10_shortest_path;
 
 import java.util.Arrays;
-import java.util.PriorityQueue;
 
 public class Dijkstra {
 
