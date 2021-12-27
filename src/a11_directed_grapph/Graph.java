@@ -6,14 +6,13 @@ import java.util.Scanner;
 import java.util.TreeSet;
 
 
-//
-public class Graph {
+public class Graph implements Cloneable {
 
     private int V;
     private int E;
     private TreeSet<Integer>[] adj;
     private boolean directed;
-
+    private int[] indegrees, outdegrees;
     public Graph(String filename,boolean directed){
 
         this.directed =directed;
@@ -28,6 +27,9 @@ public class Graph {
             for(int i = 0; i < V; i ++)
                 adj[i] = new TreeSet<Integer>();
 
+            indegrees = new int[V];
+            outdegrees = new int[V];
+
             E = scanner.nextInt();
             if(E < 0) throw new IllegalArgumentException("E must be non-negative");
 
@@ -41,6 +43,10 @@ public class Graph {
                 if(adj[a].contains(b)) throw new IllegalArgumentException("Parallel Edges are Detected!");
 
                 adj[a].add(b);
+                if(directed){
+                    outdegrees[a]++;
+                    indegrees[b]++;
+                }
                 if(!directed)
                     adj[b].add(a);
             }
@@ -82,18 +88,39 @@ public class Graph {
         return adj[v];
     }
 
-//    public int degree(int v){
-//        validateVertex(v);
-//        return adj[v].size();
-//    }
+    public int degree(int v){
+        if(directed){
+            throw new RuntimeException("degree only works in undirected graph");
+        }
+        validateVertex(v);
+        return adj[v].size();
+    }
+
+    public int indegree(int v){
+        if(!directed)
+            throw new RuntimeException("indegree only works in directed graph");
+        validateVertex(v);
+        return indegrees[v];
+    }
+
+    public int outdegree(int v){
+        if(!directed)
+            throw new RuntimeException("indegree only works in directed graph");
+        validateVertex(v);
+        return outdegrees[v];
+    }
 
     public void removeEdge(int v, int w){
 
         validateVertex(v);
         validateVertex(w);
-
-        if(adj[v].contains(w)) E--;
-
+        if(adj[v].contains(w)) {
+            E--;
+            if(directed){
+                outdegrees[v]--;
+                indegrees[w]--;
+            }
+        }
 
         adj[v].remove(w);
         if(!directed)
@@ -137,5 +164,7 @@ public class Graph {
 
         Graph g = new Graph("g11.txt",true);
         System.out.print(g);
+        for(int v = 0; v < g.V(); v++)
+            System.out.println(v + " : " + g.indegree(v) + " " + g.outdegree(v));
     }
 }
