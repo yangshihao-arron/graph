@@ -15,20 +15,20 @@ public class DirectedCycleDetection {
         onPath = new boolean[G.V()];
         for(int v = 0; v < G.V(); v++)
             if(!visited[v])
-                if(dfs(v,v)){
+                if(dfs(v)){
                     hasCycle = true;
                     break;
                 }
     }
 
     //从顶点v开始，判断图中是否有环
-    private boolean dfs(int v, int parent){
+    private boolean dfs(int v){
 
         visited[v] = true;
         onPath[v] = true;
         for(int w : G.adj(v))
             if(!visited[w]){
-                if(dfs(w,v)) return true;
+                if(dfs(w)) return true;
             }
             else if(onPath[w])  //1->2,2->1也是一个环
                return true;
