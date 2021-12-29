@@ -12,6 +12,8 @@ public class CC {
 
     public CC(Graph G){
 
+        if(G.isDirected())
+            throw new IllegalArgumentException("CC only workds in undirected graph");
         this.G = G;
         visited = new int[G.V()];
         for(int i = 0; i < visited.length; i++)

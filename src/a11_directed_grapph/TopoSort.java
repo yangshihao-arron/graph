@@ -12,6 +12,7 @@ public class TopoSort {
     private boolean hasCycle = false;
 
     public TopoSort(Graph G){
+
         if(!G.isDirected()){
             throw new IllegalArgumentException("TopoSort only works in directed graph");
         }
