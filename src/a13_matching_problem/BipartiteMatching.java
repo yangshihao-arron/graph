@@ -38,6 +38,10 @@ public class BipartiteMatching {
         return maxMatching;
     }
 
+    public boolean isPerfectMatching(){
+        return maxMatching * 2 == G.V();
+    }
+
     public static void main(String[] args) {
         Graph g = new Graph("g13_2.txt");
         BipartiteMatching bm = new BipartiteMatching(g);
